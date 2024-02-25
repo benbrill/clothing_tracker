@@ -4,7 +4,9 @@
 /node_modules
 /.pnp
 .pnp.js
-
+clothing_tracker/node_modules
+/venv
+.env
 # testing
 /coverage
 
