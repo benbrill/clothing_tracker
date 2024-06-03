@@ -1,5 +1,7 @@
+// src/components/ClothingTable.js
 import React, { useState, useEffect } from 'react';
-import { Table, Button, Form } from 'react-bootstrap';
+import { Button, Container, Row, Col } from 'react-bootstrap';
+import ClothingCard from './clothing_card';
 
 function ClothingTable() {
     const [clothingItems, setClothingItems] = useState([]);
@@ -37,44 +39,25 @@ function ClothingTable() {
         });
     };
 
+    if (!clothingItems.length) {
+        return <div>Loading...</div>; // Add a loading state or message
+    }
+
     return (
-        <div>
-            <Table striped bordered hover>
-                <thead>
-                    <tr>
-                        <th>Select</th>
-                        <th>Category</th>
-                        <th>Brand</th>
-                        <th>Color</th>
-                        <th>Size</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Purchase Date</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {clothingItems.map((item) => (
-                        <tr key={item.id}>
-                            <td>
-                                <Form.Check 
-                                    type="checkbox"
-                                    checked={selectedItems.includes(item.id)}
-                                    onChange={() => handleSelectItem(item.id)}
-                                />
-                            </td>
-                            <td>{item.category}</td>
-                            <td>{item.brand}</td>
-                            <td>{item.color}</td>
-                            <td>{item.size}</td>
-                            <td>{item.price}</td>
-                            <td>{item.quantity}</td>
-                            <td>{item.purchase}</td>
-                        </tr>
-                    ))}
-                </tbody>
-            </Table>
+        <Container>
+            <Row lg={4} xl ={4} md = {2} sm = {1}>
+                {clothingItems.map((item) => (
+                    <Col key={item.id}>
+                        <ClothingCard 
+                            item={item}
+                            onSelect={handleSelectItem}
+                            isSelected={selectedItems.includes(item.id)}
+                        />
+                    </Col>
+                ))}
+            </Row>
             <Button onClick={handleSubmit}>Submit Selected Items</Button>
-        </div>
+        </Container>
     );
 }
 
