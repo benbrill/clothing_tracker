@@ -1,37 +1,22 @@
-import logging
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
-from flask_migrate import Migrate
 from werkzeug.utils import secure_filename
 import pandas as pd
 import os
 from config import Config
-from models import db, Clothing, Wear, WearsTracker
-from sqlalchemy import text
+from models import db, Item, Wear, WearsTracker
+import logging
+
+logging.basicConfig(level=logging.INFO)
 
 app = Flask(__name__)
 app.config.from_object(Config)
 CORS(app)
 db.init_app(app)
-migrate = Migrate(app, db)
-
-# Set up logging
-logging.basicConfig(level=logging.INFO)
 
 with app.app_context():
     db.create_all()
-
-@app.route('/test-db-connection', methods=['GET'])
-def test_db_connection():
-    try:
-        result = db.session.execute(text('SELECT * FROM clothing'))
-        logging.info(f"Database connection successful, current time: {result[0]}")
-        return jsonify({'status': 'success', 'current_time': result[0]})
-    except Exception as e:
-        logging.error(f"Database connection error: {e}")
-        return jsonify({'status': 'error', 'message': str(e)}), 500
-
 
 def allowed_file(filename):
     return '.' in filename and \
@@ -50,7 +35,7 @@ def add_clothing():
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
         file.save(file_path)
     
-    new_item = Clothing(
+    new_item = Item(
         category=request.form.get('category'),
         brand=request.form.get('brand'),
         color=request.form.get('color'),
@@ -70,7 +55,7 @@ def add_clothing():
 def get_clothing():
     try:
         logging.info("Fetching all clothing items")
-        items = Clothing.query.all()
+        items = Item.query.all()
         logging.info(f"Items fetched: {items}")
         items_list = [item.as_dict() for item in items]
         logging.info(f"Items list to return: {items_list}")
@@ -81,32 +66,26 @@ def get_clothing():
 
 @app.route('/add-wear', methods=['POST'])
 def add_wear():
-    try:
-        data = request.json
-        selected_items = data['items']
-        wear_id = generate_new_wear_id()
-        
+    data = request.json
+    selected_items = data['items']
+    wear_id = generate_new_wear_id()
 
-        insert_data = [Wear(wear_id=wear_id, clothing_id=clothing_id) for clothing_id in selected_items]
-        db.session.bulk_save_objects(insert_data)
-        db.session.commit()
+    insert_data = [Wear(wear_id=wear_id, clothing_id=item_id) for item_id in selected_items]
+    db.session.bulk_save_objects(insert_data)
+    db.session.commit()
 
-        change_count = WearsTracker.query.filter(db.func.date(WearsTracker.date_time) == pd.Timestamp.now().date()).count()
-        
-        new_wears_tracker = WearsTracker(
-            wear_id=wear_id,
-            date_time=pd.Timestamp.now(),
-            change_count=change_count
-        )
-        
-        db.session.add(new_wears_tracker)
-        db.session.commit()
+    change_count = WearsTracker.query.filter(db.func.date(WearsTracker.date_time) == pd.Timestamp.now().date()).count()
+    
+    new_wears_tracker = WearsTracker(
+        wear_id=wear_id,
+        date_time=pd.Timestamp.now(),
+        change_count=change_count
+    )
+    
+    db.session.add(new_wears_tracker)
+    db.session.commit()
 
-        return {'status': 'success', 'wear_id': wear_id}
-    except Exception as e:
-        logging.error(f"Error adding wear: {e}")
-        logging.info(f"Adding wear with id: {wear_id} and items: {selected_items}")
-        return jsonify({'status': 'error', 'message': str(e)}), 500
+    return {'status': 'success', 'wear_id': wear_id}
 
 def generate_new_wear_id():
     last_wear = Wear.query.order_by(Wear.wear_id.desc()).first()
