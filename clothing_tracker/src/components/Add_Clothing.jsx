@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 
-function AddClothingForm() {
+function AddClothingForm( { handleInventoryUpdate }) {
     const [clothingItem, setClothingItem] = useState({
         category: '',
         brand: '',
@@ -59,6 +59,7 @@ function AddClothingForm() {
         .then(response => response.json())
         .then(data => {
             console.log('Success:', data);
+            handleInventoryUpdate(); // Trigger a re-fetch of the inventory
             // Handle success here (e.g., clear form, show message)
         })
         .catch((error) => {
@@ -72,9 +73,9 @@ function AddClothingForm() {
             brand: '',
             color: '',
             size: '',
-            price: '',
-            quantity: '',
-            purchase: '',
+            price: 0,
+            quantity: '1',
+            purchase: Date.now(),
             thrift: false,
             description: '',
         });
@@ -83,7 +84,7 @@ function AddClothingForm() {
     return (
         <Container>
             <Row>
-                <Col md={{ span: 6, offset: 3 }}>
+                <Col md={{ span: 6, offset: 3 }}> {/* TODO: need form validation for missing fields */}
                     <Form onSubmit={handleSubmit}>
                         <Form.Group>
                             <Form.Label>Category</Form.Label>

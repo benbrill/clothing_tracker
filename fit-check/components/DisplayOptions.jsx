@@ -1,8 +1,8 @@
 // src/components/ClothingTable.js
 import React, { useState, useEffect } from 'react';
 import { Button, Container, Row, Col } from 'react-bootstrap';
-import ClothingCard from './clothing_card';
-import AddClothingModal from './Add_Clothing_Modal';
+import ClothingCard from './ClothingCard';
+import AddClothingModal from './AddClothingModal';
 
 function ClothingTable({ inventoryUpdated, handleWearsUpdate }) {
     const [clothingItems, setClothingItems] = useState([]);
