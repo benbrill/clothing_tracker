@@ -57,7 +57,7 @@ function ClothingTable({ inventoryUpdated, handleWearsUpdate }) {
         <Container>
             <Row lg={4} xl ={4} md = {2} sm = {1}>
                 {clothingItems.map((item) => (
-                    <Col key={item.id} style={{flex: 0}}>
+                    <Col key={item.id} style={{flex: "0"}}>
                         <ClothingCard 
                             item={item}
                             onSelect={handleSelectItem}

@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 
-const AddClothingForm = ({ handleInventoryUpdate }) => {
+function AddClothingForm( { handleInventoryUpdate }) {
     const [clothingItem, setClothingItem] = useState({
         category: '',
         brand: '',
@@ -11,166 +11,120 @@ const AddClothingForm = ({ handleInventoryUpdate }) => {
         quantity: '',
         purchase: '',
         description: '',
-        thrift: false,
-        file: null,
+        thrift: false
     });
 
+    useEffect(() => {
+        // Fetch clothing items logic here (if needed)
+    }, []);
+
     const handleChange = (e) => {
-        const { name, value, type, checked } = e.target;
-        setClothingItem((prev) => ({
-            ...prev,
-            [name]: type === 'checkbox' ? checked : value,
-        }));
+        setClothingItem({ ...clothingItem, [e.target.name]: e.target.value });
     };
 
     const handleFileChange = (e) => {
-        setClothingItem((prev) => ({
-            ...prev,
-            file: e.target.files[0],
-        }));
+        setClothingItem({ ...clothingItem, file: e.target.files[0] });
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
+        // Submit logic here
         console.log(clothingItem);
         const formData = new FormData();
-        Object.keys(clothingItem).forEach((key) => {
-            if (clothingItem[key] !== null && clothingItem[key] !== undefined) {
+        Object.keys(clothingItem).forEach(key => {
+            if (key !== 'file') {
                 formData.append(key, clothingItem[key]);
             }
         });
 
-        try {
-            const response = await fetch(`http:localhost:5000/add-clothing`, {
-                method: 'POST',
-                body: formData,
-            });
+        console.log(clothingItem.file);
+        if (clothingItem.file) {
+            formData.append('file', clothingItem.file);
+        }
 
+
+        fetch('http://localhost:5000/add-clothing', {
+            method: 'POST',
+            // headers: {
+            //     'Content-Type': 'application/json',
+            // },
+            body: formData
+        })
+        .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok ' + response.statusText);
             }
-
-            const data = await response.json();
+            return response.json();
+        })
+        .then(response => response.json())
+        .then(data => {
             console.log('Success:', data);
             handleInventoryUpdate(); // Trigger a re-fetch of the inventory
-            // Clear the form
-            setClothingItem({
-                category: '',
-                brand: '',
-                color: '',
-                size: '',
-                price: '',
-                quantity: '',
-                purchase: '',
-                description: '',
-                thrift: false,
-                file: null,
-            });
-        } catch (error) {
+            // Handle success here (e.g., clear form, show message)
+        })
+        .catch((error) => {
             console.error('Error:', error);
-        }
+            // Handle error here (e.g., show error message)
+        });
+
+        // Clear the form
+        setClothingItem({
+            category: '',
+            brand: '',
+            color: '',
+            size: '',
+            price: 0,
+            quantity: '1',
+            purchase: Date.now(),
+            thrift: false,
+            description: '',
+        });
     };
 
     return (
         <Container>
             <Row>
-                <Col md={{ span: 6, offset: 3 }}>
+                <Col md={{ span: 6, offset: 3 }}> {/* TODO: need form validation for missing fields */}
                     <Form onSubmit={handleSubmit}>
                         <Form.Group>
                             <Form.Label>Category</Form.Label>
-                            <Form.Control
-                                type="text"
-                                name="category"
-                                value={clothingItem.category}
-                                onChange={handleChange}
-                                required
-                            />
+                            <Form.Control type="text" name="category" value={clothingItem.category} onChange={handleChange} />
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>Brand</Form.Label>
-                            <Form.Control
-                                type="text"
-                                name="brand"
-                                value={clothingItem.brand}
-                                onChange={handleChange}
-                                required
-                            />
+                            <Form.Control type="text" name="brand" value={clothingItem.brand} onChange={handleChange} />
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>Color</Form.Label>
-                            <Form.Control
-                                type="text"
-                                name="color"
-                                value={clothingItem.color}
-                                onChange={handleChange}
-                                required
-                            />
+                            <Form.Control type="text" name="color" value={clothingItem.color} onChange={handleChange} />
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>Size</Form.Label>
-                            <Form.Control
-                                type="text"
-                                name="size"
-                                value={clothingItem.size}
-                                onChange={handleChange}
-                                required
-                            />
+                            <Form.Control type="text" name="size" value={clothingItem.size} onChange={handleChange} />
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>Description</Form.Label>
-                            <Form.Control
-                                type="text"
-                                name="description"
-                                value={clothingItem.description}
-                                onChange={handleChange}
-                            />
+                            <Form.Control type="text" name="description" value={clothingItem.description} onChange={handleChange} />
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>Price</Form.Label>
-                            <Form.Control
-                                type="number"
-                                name="price"
-                                value={clothingItem.price}
-                                onChange={handleChange}
-                                required
-                            />
+                            <Form.Control type="number" name="price" value={clothingItem.price} onChange={handleChange} />
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>Thrifted?</Form.Label>
-                            <Form.Check
-                                type="checkbox"
-                                name="thrift"
-                                checked={clothingItem.thrift}
-                                onChange={handleChange}
-                            />
+                            <Form.Control type="checkbox" name="price" value={clothingItem.thrift} onChange={handleChange} />
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>Quantity</Form.Label>
-                            <Form.Control
-                                type="number"
-                                name="quantity"
-                                value={clothingItem.quantity}
-                                onChange={handleChange}
-                                required
-                            />
+                            <Form.Control type="number" name="quantity" value={clothingItem.quantity} onChange={handleChange} />
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>Purchase Date</Form.Label>
-                            <Form.Control
-                                type="date"
-                                name="purchase"
-                                value={clothingItem.purchase}
-                                onChange={handleChange}
-                                required
-                            />
+                            <Form.Control type="date" name="purchase" value={clothingItem.purchase} onChange={handleChange} />
                         </Form.Group>
                         <Form.Group>
                             <Form.Label>Photo</Form.Label>
-                            <Form.Control
-                                type="file"
-                                onChange={handleFileChange}
-                                required
-                            />
+                            <Form.Control type="file" onChange={handleFileChange} />
                         </Form.Group>
                         <Button variant="primary" type="submit">
                             Add Clothing Item
@@ -180,6 +134,6 @@ const AddClothingForm = ({ handleInventoryUpdate }) => {
             </Row>
         </Container>
     );
-};
+}
 
 export default AddClothingForm;

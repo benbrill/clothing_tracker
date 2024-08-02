@@ -59,7 +59,7 @@ def add_clothing():
         price=float(request.form.get('price')),
         description=request.form.get('description'),
         quantity=int(request.form.get('quantity')),
-        purchase=pd.to_datetime(request.form.get('purchase'), datetime.datetime.now()).date(),
+        purchase=pd.to_datetime(request.form.get('purchase')).date(),
         image_path=filename
     )
     
