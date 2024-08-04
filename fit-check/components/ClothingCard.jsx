@@ -25,7 +25,7 @@ const ClothingCard = ({ item, onSelect, isSelected }) => {
         cursor: 'pointer', 
         outline: isSelected ? '2px solid blue' : '1px solid #ccc' ,
         transition: "outline 0.1s ease-out",
-        display: "flex",
+        display: "grid",
         flexDirection: "column",
         flex: "1 0",
         minWidth: "100px"
@@ -40,7 +40,7 @@ const ClothingCard = ({ item, onSelect, isSelected }) => {
         <div style ={{fontSize: "1.5em", padding: "5px 5px"}}>
           {item.brand || 'No brand'} {item.color || 'No color'} {item.category || 'No category'}
         </div>
-        <Button onClick={handleShow}>View Details</Button>
+        <Button onClick={handleShow} style = {{justifySelf: "flex-end"}}>View Details</Button>
         <Card.Text>
           {/* <strong>Brand:</strong> {item.brand || 'No brand'}<br/>
           <strong>Color:</strong> {item.color || 'No color'}<br/>

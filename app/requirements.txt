@@ -7,4 +7,3 @@ flask_sqlalchemy
 flask_migrate
 config
 mysql
-mysqlconnector
