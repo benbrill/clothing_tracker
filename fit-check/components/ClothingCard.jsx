@@ -35,7 +35,7 @@ const ClothingCard = ({ item, onSelect, isSelected }) => {
       {/* <Card.Img variant="top" src={`${process.env.NEXT_PUBLIC_API_URL}/public/images/patagonia.jpg`} alt={item.category || 'Image'} /> */}
         <div style={{ position: 'relative', width: '100%', paddingTop: '120%' }}>
           <Image src={`/images/${image_path}`}  alt={item.category || 'Image'} layout='fill' objectFit='cover' sizes="(max-width: 600px) 100vw, 50vw"/>
-          </div>
+        </div>
         {/* <Image src={`/images/${image_path}`}  alt={item.category || 'Image'} width={230} height={275} sizes="(max-width: 600px) 100vw, 50vw"/> */}
         <div style ={{fontSize: "1.5em", padding: "5px 5px"}}>
           {item.brand || 'No brand'} {item.color || 'No color'} {item.category || 'No category'}

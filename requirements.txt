@@ -1,0 +1,4 @@
+Fkask
+gunicorn
+pandas
+SQLAlchemy

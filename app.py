@@ -173,33 +173,53 @@ def get_wears_by_date():
 def get_today_wears():
     date = datetime.datetime.now().date()
     logging.info(f"Fetching wears for date: {date}")
-    wears = WearsTracker.query.filter(db.func.date(WearsTracker.date_time) == date).all()
-    logging.info(f"Wears fetched: {wears}")
+    # wears = WearsTracker.query.filter(db.func.date(WearsTracker.date_time) == date).all()
+    result = (
+    db.session.query(WearsTracker, Clothing)
+    .outerjoin(Wear, WearsTracker.wear_id == Wear.wear_id)
+    .outerjoin(Clothing, Wear.clothing_id == Clothing.id)
+    .filter(func.date(WearsTracker.date_time) == date)
+    .all()
+    )
+    json_result = []
 
-
-    result = []
-    for wear_tracker in wears:
-        wear_items= Wear.query.filter_by(wear_id=wear_tracker.wear_id).all()
-        items = [Clothing.query.get(wear_item.clothing_id) for wear_item in wear_items]
-        wear_result = {
-            'wear_id': wear_tracker.wear_id,
-            'date_time': wear_tracker.date_time,
-            'change_count': wear_tracker.change_count,
-            'items': [{
-                'id': item.id,
-                'category': item.category,
-                'brand': item.brand,
-                'color': item.color,
-                'size': item.size,
-                'price': item.price,
-                'quantity': item.quantity,
-                'purchase': item.purchase,
-                'image_path': item.image_path
-            } for item in items]
+    for wears_tracker, clothing in result:
+        # Create a dictionary for each row combining attributes from both tables
+        row_dict = {
+            **{column.name: getattr(wears_tracker, column.name) for column in WearsTracker.__table__.columns},
+            **{column.name: getattr(clothing, column.name) for column in Clothing.__table__.columns},
         }
-        result.append(wear_result)
-    logging.info(f"Result: {result}")
-    return jsonify(result)
+        # Convert datetime fields to strings if needed
+        if 'date_time' in row_dict and row_dict['date_time']:
+            row_dict['date_time'] = row_dict['date_time'].strftime("%a, %d %b %Y %H:%M:%S GMT")
+        if 'purchase' in row_dict and row_dict['purchase']:
+            row_dict['purchase'] = row_dict['purchase'].strftime("%a, %d %b %Y %H:%M:%S GMT")
+
+        json_result.append(row_dict)
+
+    # result = []
+    # for wear_tracker in wears:
+    #     wear_items= Wear.query.filter_by(wear_id=wear_tracker.wear_id).all()
+    #     items = [Clothing.query.get(wear_item.clothing_id) for wear_item in wear_items]
+    #     wear_result = {
+    #         'wear_id': wear_tracker.wear_id,
+    #         'date_time': wear_tracker.date_time,
+    #         'change_count': wear_tracker.change_count,
+    #         'items': [{
+    #             'id': item.id,
+    #             'category': item.category,
+    #             'brand': item.brand,
+    #             'color': item.color,
+    #             'size': item.size,
+    #             'price': item.price,
+    #             'quantity': item.quantity,
+    #             'purchase': item.purchase,
+    #             'image_path': item.image_path
+    #         } for item in items]
+    #     }
+    #     result.append(wear_result)
+    logging.info(f"Result: {json_result}")
+    return jsonify(json_result)
 
 
 if __name__ == '__main__':
