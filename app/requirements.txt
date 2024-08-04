@@ -1,0 +1,10 @@
+Flask
+gunicorn
+pandas
+SQLAlchemy
+flask_cors
+flask_sqlalchemy
+flask_migrate
+config
+mysql
+mysqlconnector

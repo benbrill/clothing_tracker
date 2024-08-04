@@ -6,6 +6,8 @@
 .pnp.js
 clothing_tracker/node_modules
 /venv
+app/node_modules
+app/venv
 .env
 # testing
 /coverage

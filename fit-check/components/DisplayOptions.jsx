@@ -47,7 +47,14 @@ function ClothingTable({ inventoryUpdated, handleWearsUpdate }) {
     };
 
     if (!clothingItems.length) {
-        return <div>Loading...</div>; // Add a loading state or message
+        
+        return (
+        <>
+        <div>Loading...</div>;
+        <Button variant="primary" onClick={handleShow}>Add Item</Button>
+        <AddClothingModal show={showModal} handleClose={handleClose}/>
+        </>
+        )
     }
 
     return (
