@@ -1,8 +1,9 @@
 // src/components/ClothingTable.js
 import React, { useState, useEffect } from 'react';
-import { Button, Container, Row, Col } from 'react-bootstrap';
+import { Button, Container, Row, Col, CardGroup } from 'react-bootstrap';
 import ClothingCard from './ClothingCard';
 import AddClothingModal from './AddClothingModal';
+import ClothingCardGroup from './ClothingCardGroup';
 
 function ClothingTable({ inventoryUpdated, handleWearsUpdate }) {
     const [clothingItems, setClothingItems] = useState([]);
@@ -51,13 +52,18 @@ function ClothingTable({ inventoryUpdated, handleWearsUpdate }) {
 
     return (
         <>
-        <Button variant="primary" onClick={handleShow}>
-        Add Item
-        </Button>
-        <Container>
-            <Row lg={4} xl ={4} md = {2} sm = {1}>
+
+        <div id="header" style ={{display: "flex"}}>
+            <div style = {{fontSize: "2.25em", fontWeight: 500}}>Your Wardrobe</div>
+            <div style={{display: "flex", alignItems: "center", padding: "0 20px"}}>   
+                <Button variant="primary" onClick={handleShow}>Add Item</Button>
+            </div>
+        </div>
+        <ClothingCardGroup clothingItems={clothingItems} handleSelectItem={handleSelectItem} selectedItems={selectedItems} />
+        {/* <CardGroup style={{display: "flex", flexWrap: "wrap"}}>
+            <Row lg={4} xl ={4} md = {4} sm = {4}>
                 {clothingItems.map((item) => (
-                    <Col key={item.id} style={{flex: "0"}}>
+                    <Col key={item.id} className='d-flex align-items-stretch'>
                         <ClothingCard 
                             item={item}
                             onSelect={handleSelectItem}
@@ -66,8 +72,8 @@ function ClothingTable({ inventoryUpdated, handleWearsUpdate }) {
                     </Col>
                 ))}
             </Row>
-            <Button onClick={handleSubmit}>Submit Selected Items</Button>
-        </Container>
+        </CardGroup> */}
+        <Button onClick={handleSubmit}>Submit Selected Items</Button>
         <AddClothingModal show={showModal} handleClose={handleClose}/>
         </>
     );

@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import ClothingCard from './ClothingCard'
-import { Button, Container, Row, Col } from 'react-bootstrap'
+import { Button, Container, Row, Col, CardGroup } from 'react-bootstrap'
+import ClothingCardGroup from './ClothingCardGroup'
 
 const TodaysWears = ({ handleInventoryUpdate, wearsUpdated }) => {
-    const [showModal, setShowModal] = useState(false);
-    const [clothingItems, setClothingItems] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [clothingItems, setClothingItems] = useState([]);
 
-    const handleShow = () => setShowModal(true);
-    const handleClose = () => setShowModal(false);
+  const handleShow = () => setShowModal(true);
+  const handleClose = () => setShowModal(false);
+
+  const handleSelect = (item) => {
+      return null
+  }
 
     useEffect(() => {
         fetch('http://localhost:5000/get_today_wears')
@@ -15,23 +20,13 @@ const TodaysWears = ({ handleInventoryUpdate, wearsUpdated }) => {
             .then(data => setClothingItems(data))
             .catch(error => console.error('Error:', error));
     }, [wearsUpdated]);
-console.log(clothingItems[1])
   return (
     <>
-    <h2>Items Worn Today</h2>
-
-    <Container>
-        <Row>
+    <div style = {{fontSize: "2.25em", fontWeight: 500}}>What you are wearing</div>
+ 
       {clothingItems.length > 0 ?
-      clothingItems[clothingItems.length - 1].items.map((item) => (
-       <Col style = {{flex: "0"}}> 
-       <ClothingCard key={item.id} item={item} /> 
-       {/* Clothing card currently has an "OnSelect Function" */}
-       </Col>
-      )) : 
+      <ClothingCardGroup clothingItems={clothingItems[clothingItems.length - 1].items}/>: 
       <div>No items to display</div>}
-      </Row>
-    </Container>
     
     </>
   )

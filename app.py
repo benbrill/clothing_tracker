@@ -9,7 +9,7 @@ import pandas as pd
 import os
 from config import Config
 from models import db, Clothing, Wear, WearsTracker
-from sqlalchemy import text
+from sqlalchemy import text, func
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -72,10 +72,28 @@ def add_clothing():
 def get_clothing():
     try:
         # logging.info("Fetching all clothing items")
-        items = Clothing.query.all()
+        # items = Clothing.query.all()
+        wear_count_subquery = (
+            db.session.query(
+                Wear.clothing_id,
+                func.count(Wear.clothing_id).label('wear_count'),
+                func.max(WearsTracker.date_time).label('last_wear_date')
+            )
+            .join(WearsTracker, Wear.wear_id == WearsTracker.wear_id)
+            .group_by(Wear.clothing_id)
+            .subquery()
+        )
+        # Main query using Wear.query and joining with Clothing
+        items = (
+            Clothing.query
+            .outerjoin(wear_count_subquery, Clothing.id == wear_count_subquery.c.clothing_id)
+            .add_columns(wear_count_subquery.c.wear_count, wear_count_subquery.c.last_wear_date)
+            .all()
+        )
         # logging.info(f"Items fetched: {items}")
-        items_list = [item.as_dict() for item in items]
+        items_list = [{**item.as_dict(), **{"wear_count": wear, "last_wear_date": last_wear_date}} for (item, wear, last_wear_date) in items]
         # logging.info(f"Items list to return: {items_list}")
+        # logging.info(f"Items fetched: {items_list}")
         return jsonify(items_list)
     except Exception as e:
         logging.error(f"Error fetching clothing items: {e}")
@@ -182,6 +200,7 @@ def get_today_wears():
         result.append(wear_result)
     logging.info(f"Result: {result}")
     return jsonify(result)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
