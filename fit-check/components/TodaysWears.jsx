@@ -16,9 +16,11 @@ const TodaysWears = ({ handleInventoryUpdate, wearsUpdated }) => {
       return null
   }
 
+  const apiURL = process.env.NEXT_PUBLIC_API_URL;
+
   useEffect(() => {
     // Fetch the data from the API
-    fetch('http://localhost:5000/get_today_wears')
+    fetch(`${apiURL}/get_today_wears`)
       .then(response => response.json())
       .then(data => {
         // Update clothing items state

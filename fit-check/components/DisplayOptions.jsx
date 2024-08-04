@@ -13,8 +13,11 @@ function ClothingTable({ inventoryUpdated, handleWearsUpdate }) {
     const handleShow = () => setShowModal(true);
     const handleClose = () => setShowModal(false);
 
+
+    const apiURL = process.env.NEXT_PUBLIC_API_URL;
+
     useEffect(() => {
-        fetch('http://localhost:5000/clothing')
+        fetch(`${apiURL}/clothing`)
             .then(response => response.json())
             .then(data => setClothingItems(data))
             .catch(error => console.error('Error:', error));
@@ -28,7 +31,7 @@ function ClothingTable({ inventoryUpdated, handleWearsUpdate }) {
     };
 
     const handleSubmit = () => {
-        fetch('http://localhost:5000/add-wear', {
+        fetch(`${apiURL}/add-wear`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
