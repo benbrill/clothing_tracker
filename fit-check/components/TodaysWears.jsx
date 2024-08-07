@@ -40,7 +40,7 @@ const TodaysWears = ({ handleInventoryUpdate, wearsUpdated }) => {
 
   return (
     <>
-    <div style = {{fontSize: "2.25em", fontWeight: 500}}>What you are wearing</div>
+    <div className='font-sans text-4xl font-bold'>Your Outfit</div>
  
       {clothingItems.length > 0 ?
       <ClothingCardGroup clothingItems={todaysWears}/>: 

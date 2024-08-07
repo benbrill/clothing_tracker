@@ -22,8 +22,9 @@ const ClothingCard = ({ item, onSelect, isSelected }) => {
       style={{ 
         // width: '18rem', 
         marginBottom: '1rem', 
+        borderRadius: '0px',
         cursor: 'pointer', 
-        outline: isSelected ? '2px solid blue' : '1px solid #ccc' ,
+        outline: isSelected ? '2px solid blue' : '2px solid black' ,
         transition: "outline 0.1s ease-out",
         display: "grid",
         flexDirection: "column",
@@ -37,10 +38,10 @@ const ClothingCard = ({ item, onSelect, isSelected }) => {
           <Image src={image_path}  alt={item.category || 'Image'} layout='fill' objectFit='cover' sizes="(max-width: 600px) 100vw, 50vw"/>
         </div>
         {/* <Image src={`/images/${image_path}`}  alt={item.category || 'Image'} width={230} height={275} sizes="(max-width: 600px) 100vw, 50vw"/> */}
-        <div style ={{fontSize: "1.5em", padding: "5px 5px"}}>
+        <div style ={{fontSize: "1.25em", padding: "5px 5px"}} className='font-sans font-medium'>
           {item.brand || 'No brand'} {item.color || 'No color'} {item.category || 'No category'}
         </div>
-        <Button onClick={handleShow} style = {{justifySelf: "flex-end"}}>View Details</Button>
+        <button onClick={handleShow} className = "flex-end font-sans">View Details</button>
         <Card.Text>
           {/* <strong>Brand:</strong> {item.brand || 'No brand'}<br/>
           <strong>Color:</strong> {item.color || 'No color'}<br/>

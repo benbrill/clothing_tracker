@@ -64,9 +64,9 @@ function ClothingTable({ inventoryUpdated, handleWearsUpdate }) {
         <>
 
         <div id="header" style ={{display: "flex"}}>
-            <div style = {{fontSize: "2.25em", fontWeight: 500}}>Your Wardrobe</div>
+            <div className='text-4xl font-bold font-sans'>Your Wardrobe</div>
             <div style={{display: "flex", alignItems: "center", padding: "0 20px"}}>   
-                <Button variant="primary" onClick={handleShow}>Add Item</Button>
+                <button className= 'font-sans border-2 border-black px-2' onClick={handleShow}>Add Item</button>
             </div>
         </div>
         <ClothingCardGroup clothingItems={clothingItems} handleSelectItem={handleSelectItem} selectedItems={selectedItems} />
@@ -83,7 +83,7 @@ function ClothingTable({ inventoryUpdated, handleWearsUpdate }) {
                 ))}
             </Row>
         </CardGroup> */}
-        <Button onClick={handleSubmit}>Submit Selected Items</Button>
+        <button onClick={handleSubmit} className= 'font-sans border-2 border-black px-2'>Submit Selected Items</button>
         <AddClothingModal show={showModal} handleClose={handleClose}/>
         </>
     );

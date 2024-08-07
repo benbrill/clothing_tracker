@@ -1,5 +1,6 @@
 // These styles apply to every route in the application
-import './global.css'
+import '../styles/global.css'
+import 'bootstrap/dist/css/bootstrap.min.css'
  
 export const metadata = {
   title: 'Create Next App',
@@ -9,7 +10,6 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <h1>Hi</h1>
       <body>{children}</body>
     </html>
   )

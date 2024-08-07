@@ -1,7 +1,9 @@
+'use client'
+
 import { useState } from "react"
 import TodaysWears from "../components/TodaysWears"
 import DisplayOptions from "../components/DisplayOptions"
-import 'bootstrap/dist/css/bootstrap.min.css'
+
 
 export default function FirstPost() {
     const [inventoryUpdated, setInventoryUpdated] = useState(false);
