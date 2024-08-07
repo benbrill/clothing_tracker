@@ -13,7 +13,7 @@ console.log(item)
         </Modal.Header>
         <Modal.Title>{item.brand} {item.color} {item.category}</Modal.Title>
         <div style={{ position: 'relative', width: '100%', paddingTop: "120%"}}>
-          <Image src={`/images/${image_path}`}  alt={item.category || 'Image'} layout='fill' objectFit='cover' sizes="(max-width: 600px) 100vw, 50vw"/>
+          <Image src={image_path}  alt={item.category || 'Image'} layout='fill' objectFit='cover' sizes="(max-width: 600px) 100vw, 50vw"/>
         </div>
         <Modal.Body>
             <p><strong>Brand:</strong> {item.brand || 'No brand'}</p>
