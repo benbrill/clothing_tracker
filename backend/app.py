@@ -217,9 +217,9 @@ def get_today_wears():
         }
         # Convert datetime fields to strings if needed
         if 'date_time' in row_dict and row_dict['date_time']:
-            row_dict['date_time'] = row_dict['date_time'].strftime("%a, %d %b %Y %H:%M:%S GMT")
+            row_dict['date_time'] = row_dict['date_time']
         if 'purchase' in row_dict and row_dict['purchase']:
-            row_dict['purchase'] = row_dict['purchase'].strftime("%a, %d %b %Y %H:%M:%S GMT")
+            row_dict['purchase'] = row_dict['purchase']
 
         json_result.append(row_dict)
 
@@ -249,5 +249,5 @@ def get_today_wears():
 
 
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
+    port = int(os.environ.get('PORT', 10000))
     app.run(debug=os.environ.get('DEBUG'), host='0.0.0.0', port=port)
