@@ -7,7 +7,7 @@ import ClothingCardModal from './ClothingCardModal';
 
 const ClothingCard = ({ item, onSelect, isSelected }) => {
   if (!item) return null; // Early return if item is undefined
-  const image_path = item.image_path || 'patagonia.jpg';
+  const image_path = item.image_path || 'https://via.placeholder.com/150';
 
   const [showModal, setShowModal] = useState(false);
   const handleShow = () => setShowModal(true);
@@ -34,7 +34,7 @@ const ClothingCard = ({ item, onSelect, isSelected }) => {
     >
       {/* <Card.Img variant="top" src={`${process.env.NEXT_PUBLIC_API_URL}/public/images/patagonia.jpg`} alt={item.category || 'Image'} /> */}
         <div style={{ position: 'relative', width: '100%', paddingTop: '120%' }}>
-          <Image src={`/images/${image_path}`}  alt={item.category || 'Image'} layout='fill' objectFit='cover' sizes="(max-width: 600px) 100vw, 50vw"/>
+          <Image src={image_path}  alt={item.category || 'Image'} layout='fill' objectFit='cover' sizes="(max-width: 600px) 100vw, 50vw"/>
         </div>
         {/* <Image src={`/images/${image_path}`}  alt={item.category || 'Image'} width={230} height={275} sizes="(max-width: 600px) 100vw, 50vw"/> */}
         <div style ={{fontSize: "1.5em", padding: "5px 5px"}}>

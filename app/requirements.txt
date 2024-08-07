@@ -9,3 +9,4 @@ config
 mysql-connector-python
 PyMySQL
 python-dotenv
+boto3

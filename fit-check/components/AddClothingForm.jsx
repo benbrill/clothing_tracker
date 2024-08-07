@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 
 function AddClothingForm( { handleInventoryUpdate }) {
+
+    const apiURL = process.env.NEXT_PUBLIC_API_URL;
     const [clothingItem, setClothingItem] = useState({
         category: '',
         brand: '',
@@ -43,7 +45,7 @@ function AddClothingForm( { handleInventoryUpdate }) {
         }
 
 
-        fetch('http://localhost:5000/add-clothing', {
+        fetch(`${apiURL}/add-clothing`, {
             method: 'POST',
             // headers: {
             //     'Content-Type': 'application/json',

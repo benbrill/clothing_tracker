@@ -7,15 +7,28 @@ from flask_migrate import Migrate
 from werkzeug.utils import secure_filename
 import pandas as pd
 import os
+import boto3
 from config import Config
 from models import db, Clothing, Wear, WearsTracker
 from sqlalchemy import text, func
 
 app = Flask(__name__)
 app.config.from_object(Config)
-CORS(app)
+CORS(app, origins=['http://localhost:3000'])
 db.init_app(app)
 migrate = Migrate(app, db)
+
+S3_BUCKET = os.getenv('S3_BUCKET_NAME')
+AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+AWS_REGION = os.getenv('AWS_REGION', 'us-east-1')
+
+s3_client = boto3.client(
+    's3',
+    aws_access_key_id=AWS_ACCESS_KEY_ID,
+    aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+    region_name=AWS_REGION
+)
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -45,12 +58,25 @@ def hello_world():
 @app.route('/add-clothing', methods=['POST'])
 def add_clothing():
     file = request.files.get('file')
-    file_path = None
-    if file and allowed_file(file.filename): # TODO - change name of file to unique identifier
+    image_url = None
+    if file and allowed_file(file.filename):
+        # Generate a unique identifier for the filename
         filename = secure_filename(file.filename)
-        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-        file.save(file_path)
-    
+        logging.info(f"Uploading file to S3: {file.filename}")
+        logging.info(f"S3_BUCKET: {S3_BUCKET}")
+
+        try:
+            s3_client.upload_fileobj(
+                file,
+                S3_BUCKET,
+                filename
+            )
+            # Construct the S3 URL
+            image_url = f"https://{S3_BUCKET}.s3.amazonaws.com/{filename}"
+        except Exception as e:
+            logging.info("Exception: ", e)
+            return jsonify({'status': 'error', 'message': f"Failed to upload to S3: {str(e)}"}), 500
+
     new_item = Clothing(
         category=request.form.get('category'),
         brand=request.form.get('brand'),
@@ -60,13 +86,13 @@ def add_clothing():
         description=request.form.get('description'),
         quantity=int(request.form.get('quantity')),
         purchase=pd.to_datetime(request.form.get('purchase')).date(),
-        image_path=filename
+        image_path=image_url
     )
-    
+
     db.session.add(new_item)
     db.session.commit()
-    
-    return jsonify({'status': 'success', 'file_path': file_path})
+
+    return jsonify({'status': 'success', 'image_url': image_url})
 
 @app.route('/clothing', methods=['GET'])
 def get_clothing():
