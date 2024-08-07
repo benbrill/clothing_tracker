@@ -14,7 +14,7 @@ from sqlalchemy import text, func
 
 app = Flask(__name__)
 app.config.from_object(Config)
-CORS(app, origins=['http://localhost:3000'])
+CORS(app, origins=['http://localhost:3000', 'https://fit-check-nine.vercel.app'])
 db.init_app(app)
 migrate = Migrate(app, db)
 
