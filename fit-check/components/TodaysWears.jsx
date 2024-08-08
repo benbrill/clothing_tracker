@@ -57,7 +57,7 @@ const TodaysWears = ({ handleInventoryUpdate, wearsUpdated }) => {
   console.log(groupedByWearId)
   return (
     <>
-    <div className='font-sans text-4xl font-bold'>Your Outfit</div>
+    <div className='font-mono text-4xl font-bold'>Your Outfit</div>
  
 
       <ClothingCardGroup clothingItems={todaysWears}/>
@@ -66,7 +66,7 @@ const TodaysWears = ({ handleInventoryUpdate, wearsUpdated }) => {
         <Row className='flex gap-2.5 px-2 flex-nowrap overflow-x-scroll' >
         {Object.entries(groupedByWearId).slice(0,Object.entries(groupedByWearId).length - 1).map(([wear_id, wear_items], index) => (
           <Col key={wear_id} className='bg-slate-200 border-gray-400 border-2 px-2 grow-0 shrink-1' style={{flex: "0 1"}}>
-            <div className='font-sans text-l font-medium uppercase tracking-widest'> Outfit {index + 1}</div>
+            <div className='font-mono text-l font-medium uppercase tracking-widest'> Outfit {index + 1}</div>
               <CardGroup md = {12} xs = {4} className='flex gap-1.5 flex-nowrap'>
                 {wear_items.map((item) => (
                   <ClothingCardSmall item={item}/>

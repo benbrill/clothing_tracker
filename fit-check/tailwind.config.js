@@ -12,6 +12,7 @@ module.exports = {
     fontFamily: {
     sans: ['DM Sans', 'sans-serif'],
     serif: ['Merriweather', 'serif'],
+    mono: ['DM Mono', 'monospace'],
   },
     extend: {},
   },

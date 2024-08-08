@@ -141,7 +141,7 @@ def add_wear():
         
         new_wears_tracker = WearsTracker(
             wear_id=wear_id,
-            date_time=pd.Timestamp.now(),
+            date_time=pd.Timestamp.utcnow(),
             change_count=change_count
         )
         

@@ -17,8 +17,8 @@ export default function FirstPost() {
     const handleWearsUpdate = () => {
         setWearsUpdated(!wearsUpdated); // Toggle the state to trigger useEffect in TodaysWears
     };
-
-    
+    const d = new Date()
+    console.log(d.getTime().toLocaleString())
     return (
         <>
 
@@ -28,7 +28,7 @@ export default function FirstPost() {
           maxWidth: 1080,
           padding: `0 1.0875rem 1.45rem`,
         }}>
-            <div className="font-sans text-6xl font-bold pb-3">FitCheck</div>
+            <div className="font-mono text-6xl font-bold pb-3">FitCheck</div>
             <TodaysWears handleInventoryUpdate={handleInventoryUpdate} wearsUpdated={wearsUpdated}/>
             <DisplayOptions inventoryUpdated={inventoryUpdated} handleWearsUpdate={handleWearsUpdate}/>
             <WearsCalendar />
