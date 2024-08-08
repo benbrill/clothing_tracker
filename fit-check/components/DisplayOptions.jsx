@@ -1,9 +1,9 @@
 // src/components/ClothingTable.js
 import React, { useState, useEffect } from 'react';
 import { Button, Container, Row, Col, CardGroup } from 'react-bootstrap';
-import ClothingCard from './ClothingCard';
+import ClothingCard from './ClothingCard/ClothingCard';
 import AddClothingModal from './AddClothingModal';
-import ClothingCardGroup from './ClothingCardGroup';
+import ClothingCardGroup from './ClothingCard/ClothingCardGroup';
 
 function ClothingTable({ inventoryUpdated, handleWearsUpdate }) {
     const [clothingItems, setClothingItems] = useState([]);
@@ -54,7 +54,7 @@ function ClothingTable({ inventoryUpdated, handleWearsUpdate }) {
         return (
         <>
         <div>Loading...</div>;
-        <Button variant="primary" onClick={handleShow}>Add Item</Button>
+        <button className= 'font-sans border-2 border-black px-2 uppercase tracking-wider font-semibold bg-slate-200' onClick={handleShow}>Add Item</button>
         <AddClothingModal show={showModal} handleClose={handleClose}/>
         </>
         )
@@ -66,10 +66,10 @@ function ClothingTable({ inventoryUpdated, handleWearsUpdate }) {
         <div id="header" style ={{display: "flex"}}>
             <div className='text-4xl font-bold font-sans'>Your Wardrobe</div>
             <div style={{display: "flex", alignItems: "center", padding: "0 20px"}}>   
-                <button className= 'font-sans border-2 border-black px-2' onClick={handleShow}>Add Item</button>
+                <button className= 'font-sans border-2 border-black px-2 uppercase tracking-wider font-semibold bg-slate-200' onClick={handleShow}>Add Item</button>
             </div>
         </div>
-        <ClothingCardGroup clothingItems={clothingItems} handleSelectItem={handleSelectItem} selectedItems={selectedItems} />
+        <ClothingCardGroup clothingItems={clothingItems} handleSelectItem={handleSelectItem} selectedItems={selectedItems} viewDetails={true} />
         {/* <CardGroup style={{display: "flex", flexWrap: "wrap"}}>
             <Row lg={4} xl ={4} md = {4} sm = {4}>
                 {clothingItems.map((item) => (
@@ -83,7 +83,7 @@ function ClothingTable({ inventoryUpdated, handleWearsUpdate }) {
                 ))}
             </Row>
         </CardGroup> */}
-        <button onClick={handleSubmit} className= 'font-sans border-2 border-black px-2'>Submit Selected Items</button>
+        <button onClick={handleSubmit} className= 'font-sans border-2 border-black px-2 uppercase tracking-wider font-semibold bg-slate-200'>Submit Selected Items</button>
         <AddClothingModal show={showModal} handleClose={handleClose}/>
         </>
     );

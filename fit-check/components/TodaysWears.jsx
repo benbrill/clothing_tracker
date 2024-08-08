@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import ClothingCard from './ClothingCard'
+import ClothingCard from './ClothingCard/ClothingCard'
 import { Button, Container, Row, Col, CardGroup } from 'react-bootstrap'
-import ClothingCardGroup from './ClothingCardGroup'
+import ClothingCardGroup from './ClothingCard/ClothingCardGroup'
 
 const TodaysWears = ({ handleInventoryUpdate, wearsUpdated }) => {
   const [showModal, setShowModal] = useState(false);
@@ -42,10 +42,14 @@ const TodaysWears = ({ handleInventoryUpdate, wearsUpdated }) => {
     <>
     <div className='font-sans text-4xl font-bold'>Your Outfit</div>
  
-      {clothingItems.length > 0 ?
-      <ClothingCardGroup clothingItems={todaysWears}/>: 
-      <div>No items to display</div>}
-    
+
+      <ClothingCardGroup clothingItems={todaysWears}/>
+      <div>
+        <div className='font-sans text-2xl font-medium'> Your other outfits today </div>
+        <ClothingCardGroup clothingItems={clothingItems} handleSelectItem={handleSelect}/>
+
+      </div>
+      
     </>
   )
 }

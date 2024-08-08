@@ -3,6 +3,8 @@
 import { useState } from "react"
 import TodaysWears from "../components/TodaysWears"
 import DisplayOptions from "../components/DisplayOptions"
+import WearsCalendar from "../components/WearsCalendar"
+import 'react-calendar/dist/Calendar.css';
 
 
 export default function FirstPost() {
@@ -28,6 +30,7 @@ export default function FirstPost() {
         }}>
             <TodaysWears handleInventoryUpdate={handleInventoryUpdate} wearsUpdated={wearsUpdated}/>
             <DisplayOptions inventoryUpdated={inventoryUpdated} handleWearsUpdate={handleWearsUpdate}/>
+            <WearsCalendar />
         </div>
         </>)
 }
