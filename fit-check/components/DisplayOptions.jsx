@@ -61,7 +61,7 @@ function ClothingTable({ inventoryUpdated, handleWearsUpdate }) {
     }
 
     return (
-        <>
+        <div className='pt-3'>
 
         <div id="header" style ={{display: "flex"}}>
             <div className='text-4xl font-bold font-sans'>Your Wardrobe</div>
@@ -85,7 +85,7 @@ function ClothingTable({ inventoryUpdated, handleWearsUpdate }) {
         </CardGroup> */}
         <button onClick={handleSubmit} className= 'font-sans border-2 border-black px-2 uppercase tracking-wider font-semibold bg-slate-200'>Submit Selected Items</button>
         <AddClothingModal show={showModal} handleClose={handleClose}/>
-        </>
+        </div>
     );
 }
 

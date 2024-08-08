@@ -4,7 +4,6 @@ import Image from 'next/image'
 
 const ClothingCardModal = ({item, show, handleClose}) => {
 const image_path = item.image_path || 'https://via.placeholder.com/150';
-console.log(item)
   return (
     <div>
         <Modal show={show} onHide={handleClose}>

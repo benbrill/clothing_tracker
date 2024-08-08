@@ -28,6 +28,7 @@ export default function FirstPost() {
           maxWidth: 1080,
           padding: `0 1.0875rem 1.45rem`,
         }}>
+            <div className="font-sans text-6xl font-bold pb-3">FitCheck</div>
             <TodaysWears handleInventoryUpdate={handleInventoryUpdate} wearsUpdated={wearsUpdated}/>
             <DisplayOptions inventoryUpdated={inventoryUpdated} handleWearsUpdate={handleWearsUpdate}/>
             <WearsCalendar />
