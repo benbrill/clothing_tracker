@@ -20,19 +20,19 @@ const ClothingCard = ({ item, onSelect, isSelected, viewDetails}) => {
     <ClothingCardModal item={item} show={showModal} handleClose={handleClose}/>
     <Card 
       style={{ 
-        // width: '18rem', 
-        marginBottom: '1rem', 
+      //   // width: '18rem', 
+      //   marginBottom: '1rem', 
         borderRadius: '0px',
-        cursor: 'pointer', 
+      //   cursor: 'pointer', 
         background: isSelected ? 'rgb(226 232 240)' : 'white' ,
-        outline: isSelected ? 'rgb(3 105 161)' : 'black' ,
-        // transition: "outline 0.1s ease-out",
-        display: "grid",
-        flexDirection: "column",
-        flex: "1 0",
-        minWidth: "100px"
+        borderColor: isSelected ? 'rgb(3 105 161)' : 'rgb(50 50 50)' ,
+      //   // transition: "outline 0.1s ease-out",
+      //   display: "grid",
+      //   flexDirection: "column",
+      //   flex: "1 0",
+      //   minWidth: "100px"
       }}
-      className='hover:bg-slate-200 transition border-2 hover:border-sky-700 rounded-none' 
+      className={`hover:bg-slate-200 transition border-${isSelected ? 3 : 2} hover:border-sky-700 rounded-none cursor-pointer grid flex-grow flex-shrink-0 min-w-28 mb-4`}
     >
       {/* <Card.Img variant="top" src={`${process.env.NEXT_PUBLIC_API_URL}/public/images/patagonia.jpg`} alt={item.category || 'Image'} /> */}
       <div onClick={(onSelect) ? () => onSelect(item.id) : handleShow}>
@@ -52,7 +52,7 @@ const ClothingCard = ({ item, onSelect, isSelected, viewDetails}) => {
         {
           viewDetails && 
           <div className='flex flex-row-reverse flex-end px-1'>
-            <button onClick={handleShow} className = "font-sans font-light hover:text-sky-700">View Details</button>
+            <button onClick={handleShow} className = "font-mono font-light hover:text-sky-700 tracking-tight">View Details</button>
           </div>
         }
         <Card.Text>

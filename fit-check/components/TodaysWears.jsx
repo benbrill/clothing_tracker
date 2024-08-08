@@ -53,16 +53,22 @@ const TodaysWears = ({ handleInventoryUpdate, wearsUpdated }) => {
       .catch(error => console.error('Error:', error));
   }, [wearsUpdated]);
 
+  const daysOfWeek = {0: 'Sunday', 1: 'Monday', 2: 'Tuesday', 3: 'Wednesday', 4: 'Thursday', 5: 'Friday', 6: 'Saturday'}
+  const months = {0: 'January', 1: 'February', 2: 'March', 3: 'April', 4: 'May', 5: 'June', 6: 'July', 7: 'August', 8: 'September', 9: 'October', 10: 'November', 11: 'December'}
 
-  console.log(groupedByWearId)
+  const today = new Date();
   return (
     <>
-    <div className='font-mono text-4xl font-bold'>Your Outfit</div>
- 
-
+    <div className='flex py-2'>
+      <div className='flex gap-2 pr-1'>
+        <div className='w-3 h-full bg-sky-700'></div>
+      </div>
+      <div className='font-sans text-4xl font-extrabold'>Your Fit</div>
+    </div>
+    <div className='font-mono text-l uppercase tracking-widest'>{daysOfWeek[today.getDay()]}, {months[today.getMonth()]} {today.getDate()}</div>
       <ClothingCardGroup clothingItems={todaysWears}/>
       <div>
-        <div className='font-sans text-2xl font-semibold'> Your other outfits today </div>
+        <div className='font-sans text-2xl font-semibold'> Your other fits today </div>
         <Row className='flex gap-2.5 px-2 flex-nowrap overflow-x-scroll' >
         {Object.entries(groupedByWearId).slice(0,Object.entries(groupedByWearId).length - 1).map(([wear_id, wear_items], index) => (
           <Col key={wear_id} className='bg-slate-200 border-gray-400 border-2 px-2 grow-0 shrink-1' style={{flex: "0 1"}}>

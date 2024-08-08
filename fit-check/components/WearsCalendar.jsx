@@ -43,7 +43,7 @@ const WearsCalendar = () => {
         <Row className='flex gap-2.5 px-2'>
         {Object.entries(groupedByWearId).map(([wear_id, wear_items], index) => (
           <Col key={wear_id} className='bg-slate-200 border-gray-400 border-2 px-2 flex-none' style={{flex: "0 1"}}>
-            <div className='font-sans text-l font-medium uppercase tracking-widest' > Outfit {index + 1}</div>
+            <div className='font-mono text-l font-medium uppercase tracking-widest' > Outfit {index + 1}</div>
               <CardGroup md = {12} xs = {4} className='flex gap-1.5 flex-nowrap'>
                 {wear_items.map((item) => (
                   <ClothingCardSmall item={item}/>
