@@ -9,12 +9,14 @@ module.exports = {
     './src/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    fontFamily: {
-    sans: ['DM Sans', 'sans-serif'],
-    serif: ['Merriweather', 'serif'],
-    mono: ['DM Mono', 'monospace'],
-  },
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ['var(--font-dmsans)', 'sans-serif'],
+        serif: ['Merriweather', 'serif'],
+        mono: ['DM Mono', 'monospace'],
+        human: ['Mukta Malar', 'sans-serif'],
+      },
+    }
   },
   plugins: [],
   

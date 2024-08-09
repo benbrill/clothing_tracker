@@ -44,7 +44,7 @@ const ClothingCard = ({ item, onSelect, isSelected, viewDetails}) => {
           <div className='uppercase tracking-widest text-l font-medium leading-4 font-mono'>
           {item.brand || 'No brand'}
           </div>
-          <div className='capitalize font-semibold text-xl'>
+          <div className='capitalize font-semibold text-xl font-sans'>
             {item.color || 'No color'} {item.category || 'No category'}
           </div>
         </div>

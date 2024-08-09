@@ -34,10 +34,46 @@ const WearsCalendar = () => {
       .catch(error => console.error('Error:', error));
   }, [value]);
 
+  const today = new Date();
+
+  const daysOfWeek = {0: 'Sunday', 1: 'Monday', 2: 'Tuesday', 3: 'Wednesday', 4: 'Thursday', 5: 'Friday', 6: 'Saturday'}
+  const months = {0: 'January', 1: 'February', 2: 'March', 3: 'April', 4: 'May', 5: 'June', 6: 'July', 7: 'August', 8: 'September', 9: 'October', 10: 'November', 11: 'December'}
+
+
+  const getRestOfTheWeek = (today) => {
+    const days = [];
+    let tracker = 0
+    for (let i= -today.getDay(); i < 0; i++) {
+      const nextDay = new Date(today);
+      nextDay.setDate(today.getDate() + i);
+      days.push(nextDay.getDate());
+      tracker = i
+    }
+    days.push(today.getDate());
+    for (let i=1; i < 6-(today.getDay())+1; i++) {
+      const nextDay = new Date(today);
+      nextDay.setDate(today.getDate() + i);
+      days.push(nextDay.getDate());
+    }
+    return days;
+  }
+  console.log(getRestOfTheWeek(today), today.getDay())
   return (
     <div className='flex pt-3 flex-col'>
         <div>
         <Calendar className='font-sans' onChange={onChange} value = {value}/>
+        </div>
+        <div className='grid-cols-7 grid h-full'>
+          <div className=' bg-slate-100 border-gray-800 border-2 aspect-square'>
+            <div className='text-slate-800 font-mono text-l font-medium uppercase tracking-widest'>Sunday</div>
+          </div>
+          <div className=' bg-slate-100 border-gray-800 border-2 aspect-square'></div>
+          <div className=' bg-slate-100 border-gray-800 border-2 aspect-square'></div>
+          <div className=' bg-slate-100 border-gray-800 border-2 aspect-square'></div>
+          <div className=' bg-slate-100 border-gray-800 border-2 aspect-square'></div>
+          <div className=' bg-slate-100 border-gray-800 border-2 aspect-square'></div>
+          <div className=' bg-slate-100 border-gray-800 border-2 aspect-square'></div>
+          
         </div>
         <div>
         <Row className='flex gap-2.5 px-2'>

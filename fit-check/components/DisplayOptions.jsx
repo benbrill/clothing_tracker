@@ -71,7 +71,7 @@ function ClothingTable({ inventoryUpdated, handleWearsUpdate }) {
             <div className='font-sans text-4xl font-extrabold'>Your Wardrobe</div>
         </div>
             <div style={{display: "flex", alignItems: "center", padding: "0 20px"}}>   
-                <button className= 'font-mono border-2 border-black px-2 uppercase tracking-wider font-semibold bg-slate-200' onClick={handleShow}>Add Item</button>
+                <button className= 'font-mono border-2 border-black px-2 uppercase tracking-wider font-semibold bg-slate-200 hover:bg-sky-500 hover:text-white' onClick={handleShow}>Add Item</button>
             </div>
         </div>
         <ClothingCardGroup clothingItems={clothingItems} handleSelectItem={handleSelectItem} selectedItems={selectedItems} viewDetails={true} />
@@ -88,7 +88,7 @@ function ClothingTable({ inventoryUpdated, handleWearsUpdate }) {
                 ))}
             </Row>
         </CardGroup> */}
-        <button onClick={handleSubmit} className= 'font-mono border-2 border-black px-2 uppercase tracking-wider font-semibold bg-slate-200'>Submit Selected Items</button>
+        <button onClick={handleSubmit} className= 'font-mono border-2 border-black px-2 uppercase tracking-wider font-semibold bg-slate-200 hover:bg-sky-500 hover:text-white'>Submit Selected Items</button>
         <AddClothingModal show={showModal} handleClose={handleClose}/>
         </div>
     );
