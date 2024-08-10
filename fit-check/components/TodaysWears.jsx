@@ -74,7 +74,7 @@ const TodaysWears = ({ handleInventoryUpdate, wearsUpdated }) => {
     <div className='font-mono text-l uppercase tracking-widest'>{daysOfWeek[today.getDay()]}, {months[today.getMonth()]} {today.getDate()}</div>
       <ClothingCardGroup clothingItems={todaysWears}/>
       <div>
-        <div className={`font-sans text-2xl font-semibold`}> Your other fits today gg</div>
+        <div className={`font-sans text-2xl font-semibold`}> Your other fits today</div>
         <Row className='flex gap-2.5 px-2 flex-nowrap overflow-x-scroll' >
         {Object.entries(groupedByWearId).slice(0,Object.entries(groupedByWearId).length - 1).map(([wear_id, wear_items], index) => (
           <Col key={wear_id} className='bg-slate-200 border-gray-400 border-2 px-2 grow-0 shrink-1' style={{flex: "0 1"}}>

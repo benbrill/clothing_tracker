@@ -3,6 +3,7 @@ import Calendar from 'react-calendar'
 import { useState, useEffect } from 'react'
 import { Row, Col, CardGroup } from 'react-bootstrap'
 import ClothingCardSmall from './ClothingCard/ClothingCardSmall'
+import '../styles/calendar.css'
 
 const WearsCalendar = () => {
   const apiURL = process.env.NEXT_PUBLIC_API_URL;
@@ -61,7 +62,7 @@ const WearsCalendar = () => {
   return (
     <div className='flex pt-3 flex-col'>
         <div>
-        <Calendar className='font-sans' onChange={onChange} value = {value}/>
+        <Calendar className='font-sans' onChange={onChange} value = {value} />
         </div>
         <div className='grid-cols-7 grid h-full'>
           <div className=' bg-slate-100 border-gray-800 border-2 aspect-square'>
