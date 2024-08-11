@@ -42,7 +42,6 @@ const WeeklyCalendar = ({ setStartOfWeek, startOfWeek, setDisplayDate, displayDa
             {
                 week.map((day, i) => (
                     <button className={`bg-${isSelected === day.day() ? 'sky-500' :'slate-100'} border-gray-800 border-2 aspect-square cursor-pointer flex justify-end`} key={i} onClick={() => handleClick(day)}>
-                        {console.log(day, isSelected, isSelected === day.day())}
                         <div className='text-slate-800 font-mono text-l font-medium uppercase tracking-widest px-2 py-1'>{day.format("DD")}</div>
                     </button>
                 ))

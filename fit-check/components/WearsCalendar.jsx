@@ -28,7 +28,7 @@ const WearsCalendar = () => {
 
         // Directly set the nested JSON structure into state
         setClothingItems(data);
-        setDisplayedItems(clothingItems[dayjs(displayDate).format('YYYY-MM-DD')])
+        setDisplayedItems(data[dayjs(displayDate).format('YYYY-MM-DD')])
       } catch (error) {
         console.error('Error fetching clothing items:', error);
       }
@@ -38,7 +38,7 @@ const WearsCalendar = () => {
   }, [apiURL, startOfWeek]);
 
   useEffect(() => {
-    // console.log('display date changed', dayjs(displayDate).format('YYYY-MM-DD'));
+    console.log('display date changed', dayjs(displayDate).format('YYYY-MM-DD'));
     setDisplayedItems(clothingItems[dayjs(displayDate).format('YYYY-MM-DD')]);
   }, [displayDate]);
 
