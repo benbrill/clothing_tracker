@@ -4,6 +4,7 @@ import { useState } from "react"
 import TodaysWears from "../components/TodaysWears"
 import DisplayOptions from "../components/DisplayOptions"
 import WearsCalendar from "../components/WearsCalendar"
+import Test from "../components/test"
 import 'react-calendar/dist/Calendar.css';
 
 
@@ -21,7 +22,6 @@ export default function FirstPost() {
         setWearsUpdated(!wearsUpdated); // Toggle the state to trigger useEffect in TodaysWears
     };
     const d = new Date()
-    console.log(d.getTime().toLocaleString())
     return (
         <>
 
@@ -47,6 +47,7 @@ export default function FirstPost() {
             <TodaysWears handleInventoryUpdate={handleInventoryUpdate} wearsUpdated={wearsUpdated}/>
             <DisplayOptions inventoryUpdated={inventoryUpdated} handleWearsUpdate={handleWearsUpdate}/>
             <WearsCalendar />
+            {/* <Test /> */}
         </div>
         </>)
 }

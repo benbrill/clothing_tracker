@@ -1,84 +1,62 @@
-import React from 'react'
-import Calendar from 'react-calendar'
+import React, { use } from 'react'
 import { useState, useEffect } from 'react'
 import { Row, Col, CardGroup } from 'react-bootstrap'
 import ClothingCardSmall from './ClothingCard/ClothingCardSmall'
+import WeeklyCalendar from './WeeklyCalendar'
+import * as dayjs from 'dayjs'
 import '../styles/calendar.css'
 
 const WearsCalendar = () => {
   const apiURL = process.env.NEXT_PUBLIC_API_URL;
-  const [value, onChange] = useState(new Date());
-  const [clothingItems, setClothingItems] = useState([]);
-  const [groupedByWearId, setGroupedByWearId] = useState([]);
+  const [startOfWeek, setStartOfWeek] = useState(dayjs().utc().startOf('week'));
+  const [displayDate, setDisplayDate] = useState(dayjs().utc());
+  const [clothingItems, setClothingItems] = useState({});
+  const [displayedItems, setDisplayedItems] = useState({});
+  const [entriesPerAddDate, setEntriesPerAddDate] = useState([]);
+
+  // 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`${apiURL}/wears/by-week-grouped?date=${dayjs(startOfWeek).format('YYYY-MM-DD')}`);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        // console.log('Fetched data:', data);
+
+        // Directly set the nested JSON structure into state
+        setClothingItems(data);
+        setDisplayedItems(clothingItems[dayjs(displayDate).format('YYYY-MM-DD')])
+      } catch (error) {
+        console.error('Error fetching clothing items:', error);
+      }
+    };
+
+    fetchData();
+  }, [apiURL, startOfWeek]);
 
   useEffect(() => {
-    // Fetch the data from the API
-    fetch(`${apiURL}/wears?date=${value.toISOString().split('T')[0]}`)
-      .then(response => response.json())
-      .then(data => {
-        // Update clothing items state
-        setClothingItems(data);
+    // console.log('display date changed', dayjs(displayDate).format('YYYY-MM-DD'));
+    setDisplayedItems(clothingItems[dayjs(displayDate).format('YYYY-MM-DD')]);
+  }, [displayDate]);
 
-        const groupedData = data.reduce((acc, item) => {
-          // console.log(acc);
-          const { wear_id } = item;
-          if (!acc[wear_id]) {
-            acc[wear_id] = [];
-          }
-          acc[wear_id].push(item);
-          return acc;
-        }, {});
-
-        // Update the state with the grouped items
-        setGroupedByWearId(groupedData);
-      })
-      .catch(error => console.error('Error:', error));
-  }, [value]);
-
-  const today = new Date();
-
-  const daysOfWeek = {0: 'Sunday', 1: 'Monday', 2: 'Tuesday', 3: 'Wednesday', 4: 'Thursday', 5: 'Friday', 6: 'Saturday'}
-  const months = {0: 'January', 1: 'February', 2: 'March', 3: 'April', 4: 'May', 5: 'June', 6: 'July', 7: 'August', 8: 'September', 9: 'October', 10: 'November', 11: 'December'}
-
-
-  const getRestOfTheWeek = (today) => {
-    const days = [];
-    let tracker = 0
-    for (let i= -today.getDay(); i < 0; i++) {
-      const nextDay = new Date(today);
-      nextDay.setDate(today.getDate() + i);
-      days.push(nextDay.getDate());
-      tracker = i
-    }
-    days.push(today.getDate());
-    for (let i=1; i < 6-(today.getDay())+1; i++) {
-      const nextDay = new Date(today);
-      nextDay.setDate(today.getDate() + i);
-      days.push(nextDay.getDate());
-    }
-    return days;
-  }
-  console.log(getRestOfTheWeek(today), today.getDay())
+  // console.log(displayDate, displayedItems);
   return (
-    <div className='flex pt-3 flex-col'>
-        <div>
-        <Calendar className='font-sans' onChange={onChange} value = {value} />
+    <div>
+        <div id="header" style ={{display: "flex"}}>
+           <div className='flex py-3'>
+                <div className='flex gap-2 pr-1'>
+            <div className='w-3 h-full bg-sky-700'></div>
+            </div>
+                <div className='font-sans text-4xl font-extrabold'>Fit History</div>
+            </div>
         </div>
-        <div className='grid-cols-7 grid h-full'>
-          <div className=' bg-slate-100 border-gray-800 border-2 aspect-square'>
-            <div className='text-slate-800 font-mono text-l font-medium uppercase tracking-widest'>Sunday</div>
-          </div>
-          <div className=' bg-slate-100 border-gray-800 border-2 aspect-square'></div>
-          <div className=' bg-slate-100 border-gray-800 border-2 aspect-square'></div>
-          <div className=' bg-slate-100 border-gray-800 border-2 aspect-square'></div>
-          <div className=' bg-slate-100 border-gray-800 border-2 aspect-square'></div>
-          <div className=' bg-slate-100 border-gray-800 border-2 aspect-square'></div>
-          <div className=' bg-slate-100 border-gray-800 border-2 aspect-square'></div>
-          
-        </div>
-        <div>
-        <Row className='flex gap-2.5 px-2'>
-        {Object.entries(groupedByWearId).map(([wear_id, wear_items], index) => (
+        <WeeklyCalendar setStartOfWeek={setStartOfWeek} startOfWeek={startOfWeek} setDisplayDate = {setDisplayDate} displayDate={displayDate}/>
+        {displayedItems ? <div>
+        <Row className='flex gap-2.5 px-2 flex-nowrap overflow-x-scroll'>
+        {Object.entries(displayedItems).map(([wear_id, wear_items], index) => (
           <Col key={wear_id} className='bg-slate-200 border-gray-400 border-2 px-2 flex-none' style={{flex: "0 1"}}>
             <div className='font-mono text-l font-medium uppercase tracking-widest' > Outfit {index + 1}</div>
               <CardGroup md = {12} xs = {4} className='flex gap-1.5 flex-nowrap'>
@@ -89,7 +67,7 @@ const WearsCalendar = () => {
           </Col>
         ))}
         </Row>
-        </div>
+        </div> : <div>No items found</div>}
     </div>
   )
 }

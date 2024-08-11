@@ -7,7 +7,7 @@ const image_path = item.image_path || 'https://via.placeholder.com/150';
   return (
     <div>
         <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
+        <Modal.Header closeButton >
             {item.brand} {item.color} {item.category}
         </Modal.Header>
         <Modal.Title>{item.brand} {item.color} {item.category}</Modal.Title>
@@ -24,7 +24,6 @@ const image_path = item.image_path || 'https://via.placeholder.com/150';
             <p><strong>Times worn:</strong> {item.wear_count || '0'}</p>
             <p><strong>Last worn::</strong> {item.last_wear_date|| 'Never worn before'}</p>
         </Modal.Body>
-
         </Modal>
     </div>
   )

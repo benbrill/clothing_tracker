@@ -4,6 +4,8 @@ import { Button, Container, Row, Col, CardGroup } from 'react-bootstrap'
 import ClothingCardGroup from './ClothingCard/ClothingCardGroup'
 import ClothingCardSmall from './ClothingCard/ClothingCardSmall'
 import { Inter } from 'next/font/google'
+import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
  
 const inter = Inter({
   subsets: ['latin'],
@@ -61,8 +63,9 @@ const TodaysWears = ({ handleInventoryUpdate, wearsUpdated }) => {
 
   const daysOfWeek = {0: 'Sunday', 1: 'Monday', 2: 'Tuesday', 3: 'Wednesday', 4: 'Thursday', 5: 'Friday', 6: 'Saturday'}
   const months = {0: 'January', 1: 'February', 2: 'March', 3: 'April', 4: 'May', 5: 'June', 6: 'July', 7: 'August', 8: 'September', 9: 'October', 10: 'November', 11: 'December'}
-
-  const today = new Date();
+  
+  dayjs.extend(utc)
+  const today = dayjs().utc();
   return (
     <>
     <div className='flex py-2'>
@@ -71,7 +74,7 @@ const TodaysWears = ({ handleInventoryUpdate, wearsUpdated }) => {
       </div>
       <div className='font-sans text-4xl font-extrabold'>Your Fit</div>
     </div>
-    <div className='font-mono text-l uppercase tracking-widest'>{daysOfWeek[today.getDay()]}, {months[today.getMonth()]} {today.getDate()}</div>
+    <div className='font-mono text-l uppercase tracking-widest'>{daysOfWeek[today.day()]}, {months[today.month()]} {today.date()}</div>
       <ClothingCardGroup clothingItems={todaysWears}/>
       <div>
         <div className={`font-sans text-2xl font-semibold`}> Your other fits today</div>
