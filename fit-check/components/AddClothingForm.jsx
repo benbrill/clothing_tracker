@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 
-function AddClothingForm( { handleInventoryUpdate }) {
+function AddClothingForm( { handleInventoryUpdate, handleClose }) {
 
     const apiURL = process.env.NEXT_PUBLIC_API_URL;
     const [clothingItem, setClothingItem] = useState({
@@ -16,12 +16,18 @@ function AddClothingForm( { handleInventoryUpdate }) {
         thrift: false
     });
 
-    useEffect(() => {
-        // Fetch clothing items logic here (if needed)
-    }, []);
+    const sizes = {'':[],
+                     't-shirt': ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+                     'shirt': ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+                     'pants': ['31', '32', '33', '34', '35', '36'],
+                     'shorts': ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+                     'tank': ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+                     'jacket': ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+                     }
 
     const handleChange = (e) => {
         setClothingItem({ ...clothingItem, [e.target.name]: e.target.value });
+        console.log(clothingItem)
     };
 
     const handleFileChange = (e) => {
@@ -81,6 +87,7 @@ function AddClothingForm( { handleInventoryUpdate }) {
             thrift: false,
             description: '',
         });
+        handleClose();
     };
 
     const controlStyle = 'border-1 border-gray-800 rounded-none w-full font-mono';
@@ -94,7 +101,12 @@ function AddClothingForm( { handleInventoryUpdate }) {
                     <Form onSubmit={handleSubmit}>
                         <Form.Group className={groupStyle}>
                             <Form.Label className='font-sans font-semibold tracking-wide leading-tight'>Category</Form.Label>
-                            <Form.Control type="text" name="category" value={clothingItem.category} style={controlStyle2} onChange={handleChange} className={controlStyle} />
+                            <Form.Select name="category" onChange={handleChange} className={controlStyle} style={controlStyle2} >
+                                {Object.keys(sizes).map((category) => (
+                                    <option id={category} value={category}>{category}</option>
+                                ))}
+                            </Form.Select>
+                            {/* <Form.Control type="text" name="category" value={clothingItem.category} style={controlStyle2} onChange={handleChange} className={controlStyle} /> */}
                         </Form.Group>
                         <Form.Group className={groupStyle}>
                             <Form.Label className='font-sans font-semibold tracking-wide leading-tight'>Brand</Form.Label>
@@ -106,7 +118,13 @@ function AddClothingForm( { handleInventoryUpdate }) {
                         </Form.Group>
                         <Form.Group className={groupStyle}>
                             <Form.Label className='font-sans font-semibold tracking-wide leading-tight'>Size</Form.Label>
-                            <Form.Control type="text" name="size" value={clothingItem.size} onChange={handleChange} style={controlStyle2} className={controlStyle} />
+                            <Form.Select name="size" onChange={handleChange} className={controlStyle} style={controlStyle2} >
+                                {console.log("category", clothingItem.category)}
+                                {sizes[clothingItem.category].map((size) => (
+                                    <option id={size} value={size}>{size}</option>
+                                ))}
+                            </Form.Select>
+                            {/* <Form.Control type="text" name="size" value={clothingItem.size} onChange={handleChange} style={controlStyle2} className={controlStyle} /> */}
                         </Form.Group>
                         <Form.Group className={groupStyle}>
                             <Form.Label className='font-sans font-semibold tracking-wide leading-tight'>Description</Form.Label>
