@@ -40,9 +40,14 @@ const image_path = item.image_path || 'https://via.placeholder.com/150';
               <span className='font-mono font-bold'> Times worn: </span> <span>{item.wear_count || '0'}</span>
             </div>
             <div>
-              <span className='font-mono font-bold'> Last Worn: </span> 
+              <span className='font-mono font-bold'> Last worn: </span> 
               <span className='font-medium'>{dayjs(item.last_wear_date).format("MMM D, YYYY")|| 'Never worn before'}</span>
               <span className='italic font-light'> {dayjs().diff(dayjs(item.last_wear_date), 'day')} days ago</span>
+            </div>
+            <div>
+              <span className='font-mono font-bold'> Purchased: </span> 
+              <span className='font-medium'>{dayjs(item.purchase).format("MMM D, YYYY") || '0'}</span>
+              <span className='italic font-light'> {dayjs().diff(dayjs(item.purchase), 'days')} days ago</span>
             </div>
         </Modal.Body>
         <Modal.Footer className='px-3 py-1'>

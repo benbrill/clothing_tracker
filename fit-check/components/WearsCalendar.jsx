@@ -48,7 +48,7 @@ const WearsCalendar = () => {
         <div id="header" style ={{display: "flex"}}>
            <div className='flex py-3'>
                 <div className='flex gap-2 pr-1'>
-            <div className='w-3 h-full bg-sky-700'></div>
+            <div className='w-3 h-full bg-sky-500 outline outline-1'></div>
             </div>
                 <div className='font-sans text-4xl font-extrabold'>Fit History</div>
             </div>

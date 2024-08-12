@@ -41,7 +41,7 @@ const ClothingCard = ({ item, onSelect, isSelected, viewDetails}) => {
         </div>
         {/* <Image src={`/images/${image_path}`}  alt={item.category || 'Image'} width={230} height={275} sizes="(max-width: 600px) 100vw, 50vw"/> */}
         <div style ={{ padding: "5px 5px"}} className='flex flex-column'>
-          <div className='uppercase tracking-widest text-l font-medium leading-4 font-mono'>
+          <div className='uppercase tracking-widest text-sm font-medium leading-4 font-mono'>
           {item.brand || 'No brand'}
           </div>
           <div className='capitalize font-semibold text-xl font-sans'>

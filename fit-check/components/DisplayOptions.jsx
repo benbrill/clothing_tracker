@@ -4,8 +4,9 @@ import { Button, Container, Row, Col, CardGroup } from 'react-bootstrap';
 import ClothingCard from './ClothingCard/ClothingCard';
 import AddClothingModal from './AddClothingModal';
 import ClothingCardGroup from './ClothingCard/ClothingCardGroup';
+import WearOptions from './WearOptions';
 
-function ClothingTable({ inventoryUpdated, handleWearsUpdate }) {
+function ClothingTable({ inventoryUpdated, handleInventoryUpdate, handleWearsUpdate }) {
     const [clothingItems, setClothingItems] = useState([]);
     const [selectedItems, setSelectedItems] = useState([]);
     const [showModal, setShowModal] = useState(false);
@@ -40,9 +41,9 @@ function ClothingTable({ inventoryUpdated, handleWearsUpdate }) {
         })
         .then(response => response.json())
         .then(data => {
-            console.log('Success:', data);
             setSelectedItems([]); // Clear selection after submission
             handleWearsUpdate(); // Trigger a re-fetch of the items worn today
+            handleInventoryUpdate(); // Trigger a re-fetch of the inventory
         })
         .catch((error) => {
             console.error('Error:', error);
@@ -74,22 +75,13 @@ function ClothingTable({ inventoryUpdated, handleWearsUpdate }) {
                 <button className= 'font-mono border-2 border-black px-2 uppercase tracking-wider font-semibold bg-slate-200 hover:bg-sky-500 hover:text-white' onClick={handleShow}>Add Item</button>
             </div>
         </div>
+        <div className='font-sans text-lg pb-3'>
+            Select items to wear today
+        </div>
         <ClothingCardGroup clothingItems={clothingItems} handleSelectItem={handleSelectItem} selectedItems={selectedItems} viewDetails={true} />
-        {/* <CardGroup style={{display: "flex", flexWrap: "wrap"}}>
-            <Row lg={4} xl ={4} md = {4} sm = {4}>
-                {clothingItems.map((item) => (
-                    <Col key={item.id} className='d-flex align-items-stretch'>
-                        <ClothingCard 
-                            item={item}
-                            onSelect={handleSelectItem}
-                            isSelected={selectedItems.includes(item.id)}
-                        />
-                    </Col>
-                ))}
-            </Row>
-        </CardGroup> */}
+        <WearOptions />
         <button onClick={handleSubmit} className= 'font-mono border-2 border-black px-2 uppercase tracking-wider font-semibold bg-slate-200 hover:bg-sky-500 hover:text-white'>Submit Selected Items</button>
-        <AddClothingModal show={showModal} handleClose={handleClose}/>
+        <AddClothingModal show={showModal} handleClose={handleClose} handleInventoryUpdate={handleInventoryUpdate}/>
         </div>
     );
 }

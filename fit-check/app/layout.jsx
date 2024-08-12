@@ -11,7 +11,7 @@ const DMSans = DM_Sans({
 
  
 export const metadata = {
-  title: 'FitCheck',
+  title: 'Drobe',
   description: 'Track clothes',
 }
  

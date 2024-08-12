@@ -64,7 +64,6 @@ function AddClothingForm( { handleInventoryUpdate, handleClose }) {
             }
             return response.json();
         })
-        .then(response => response.json())
         .then(data => {
             console.log('Success:', data);
             handleInventoryUpdate(); // Trigger a re-fetch of the inventory
