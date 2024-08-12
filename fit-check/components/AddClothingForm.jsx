@@ -83,54 +83,58 @@ function AddClothingForm( { handleInventoryUpdate }) {
         });
     };
 
+    const controlStyle = 'border-1 border-gray-800 rounded-none w-full font-mono';
+    const controlStyle2 = {borderRadius: "0", borderColor: "rgb(31 41 55)"}
+    const groupStyle = 'mb-3';
+    
     return (
         <Container>
-            <Row>
-                <Col md={{ span: 6, offset: 3 }}> {/* TODO: need form validation for missing fields */}
+            <Row className='flex justify-center'>
+                <Col md={{ span: 10, }}> {/* TODO: need form validation for missing fields */}
                     <Form onSubmit={handleSubmit}>
-                        <Form.Group>
-                            <Form.Label>Category</Form.Label>
-                            <Form.Control type="text" name="category" value={clothingItem.category} onChange={handleChange} />
+                        <Form.Group className={groupStyle}>
+                            <Form.Label className='font-sans font-semibold tracking-wide leading-tight'>Category</Form.Label>
+                            <Form.Control type="text" name="category" value={clothingItem.category} style={controlStyle2} onChange={handleChange} className={controlStyle} />
                         </Form.Group>
-                        <Form.Group>
-                            <Form.Label>Brand</Form.Label>
-                            <Form.Control type="text" name="brand" value={clothingItem.brand} onChange={handleChange} />
+                        <Form.Group className={groupStyle}>
+                            <Form.Label className='font-sans font-semibold tracking-wide leading-tight'>Brand</Form.Label>
+                            <Form.Control type="text" name="brand" value={clothingItem.brand} onChange={handleChange} style={controlStyle2} className={controlStyle}/>
                         </Form.Group>
-                        <Form.Group>
-                            <Form.Label>Color</Form.Label>
-                            <Form.Control type="text" name="color" value={clothingItem.color} onChange={handleChange} />
+                        <Form.Group className={groupStyle}>
+                            <Form.Label className='font-sans font-semibold tracking-wide leading-tight'>Color</Form.Label>
+                            <Form.Control type="text" name="color" value={clothingItem.color} onChange={handleChange} style={controlStyle2} className={controlStyle} />
                         </Form.Group>
-                        <Form.Group>
-                            <Form.Label>Size</Form.Label>
-                            <Form.Control type="text" name="size" value={clothingItem.size} onChange={handleChange} />
+                        <Form.Group className={groupStyle}>
+                            <Form.Label className='font-sans font-semibold tracking-wide leading-tight'>Size</Form.Label>
+                            <Form.Control type="text" name="size" value={clothingItem.size} onChange={handleChange} style={controlStyle2} className={controlStyle} />
                         </Form.Group>
-                        <Form.Group>
-                            <Form.Label>Description</Form.Label>
-                            <Form.Control type="text" name="description" value={clothingItem.description} onChange={handleChange} />
+                        <Form.Group className={groupStyle}>
+                            <Form.Label className='font-sans font-semibold tracking-wide leading-tight'>Description</Form.Label>
+                            <Form.Control type="text" name="description" value={clothingItem.description} onChange={handleChange} style={controlStyle2} className={controlStyle} />
                         </Form.Group>
-                        <Form.Group>
-                            <Form.Label>Price</Form.Label>
-                            <Form.Control type="number" name="price" value={clothingItem.price} onChange={handleChange} />
+                        <Form.Group className={groupStyle}>
+                            <Form.Label className='font-sans font-semibold tracking-wide leading-tight'>Price</Form.Label>
+                            <Form.Control type="number" name="price" value={clothingItem.price} onChange={handleChange} style={controlStyle2} className={controlStyle} />
                         </Form.Group>
-                        <Form.Group>
-                            <Form.Label>Thrifted?</Form.Label>
-                            <Form.Control type="checkbox" name="price" value={clothingItem.thrift} onChange={handleChange} />
+                        <Form.Group className={groupStyle}>
+                            <Form.Label className='font-sans font-semibold tracking-wide leading-tight'>Thrifted?</Form.Label>
+                            <Form.Control type="checkbox" name="price" value={clothingItem.thrift} onChange={handleChange} style={controlStyle2} className={controlStyle} />
                         </Form.Group>
-                        <Form.Group>
-                            <Form.Label>Quantity</Form.Label>
-                            <Form.Control type="number" name="quantity" value={clothingItem.quantity} onChange={handleChange} />
+                        <Form.Group className={groupStyle}>
+                            <Form.Label className='font-sans font-semibold tracking-wide leading-tight'>Quantity</Form.Label>
+                            <Form.Control type="number" name="quantity" value={clothingItem.quantity} onChange={handleChange} style={controlStyle2} className={controlStyle} />
                         </Form.Group>
-                        <Form.Group>
-                            <Form.Label>Purchase Date</Form.Label>
-                            <Form.Control type="date" name="purchase" value={clothingItem.purchase} onChange={handleChange} />
+                        <Form.Group className={groupStyle}>
+                            <Form.Label className='font-sans font-semibold tracking-wide leading-tight'>Purchase Date</Form.Label>
+                            <Form.Control type="date" name="purchase" value={clothingItem.purchase} onChange={handleChange} style={controlStyle2} className={controlStyle} />
                         </Form.Group>
-                        <Form.Group>
-                            <Form.Label>Photo</Form.Label>
-                            <Form.Control type="file" onChange={handleFileChange} />
+                        <Form.Group className={groupStyle}>
+                            <Form.Label className='font-sans font-semibold tracking-wide leading-tight'>Photo</Form.Label>
+                            <Form.Control type="file" onChange={handleFileChange} style={{borderRadius: "0", borderColor: "rgb(31 41 55)"}} className='font-sans'/>
                         </Form.Group>
-                        <Button variant="primary" type="submit">
+                        <button className = 'font-mono border-2 border-black px-2 uppercase tracking-wider font-semibold bg-slate-200 hover:bg-sky-500 hover:text-white' type="submit">
                             Add Clothing Item
-                        </Button>
+                        </button>
                     </Form>
                 </Col>
             </Row>

@@ -35,4 +35,18 @@ a {
 img {
   max-width: 100%;
   height: auto;
+  
+}
+
+.my-modal .modal-content {
+  border-radius: 0%;
+  border-width: 2px;
+  border-color: black;
+}
+
+.my-modal .modal-content .modal-header {
+  border-bottom: 2px solid black;
+}
+.my-modal .modal-content .modal-footer {
+  border-top: 2px solid black;
 }

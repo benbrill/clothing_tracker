@@ -31,17 +31,17 @@ export default function FirstPost() {
           maxWidth: 1080,
           padding: `0 1.0875rem 1.45rem`,
         }}>
-            <div className="flex py-3 overflow-clip">
+            <div className="flex py-3 overflow-clip px-1">
                 <div className="flex gap-2 pr-1">
-                    <div className="w-3 h-full bg-sky-500"></div>
-                    <div className="w-3 h-full bg-sky-600"></div>
-                    <div className="w-3 h-full bg-sky-700"></div>
+                    <div className="w-3 h-full bg-sky-500 outline outline-1"></div>
+                    <div className="w-3 h-full bg-sky-600 outline outline-1"></div>
+                    <div className="w-3 h-full bg-sky-700 outline outline-1"></div>
                 </div>
-                <div className="font-mono text-6xl font-black leading-11">FitCheck</div>
+                <div className="font-mono text-6xl font-black leading-11">Drobe</div>
                 <div className="flex gap-2 pl-1">
-                    <div className="w-3 h-full bg-sky-700"></div>
-                    <div className="w-3 h-full bg-sky-600"></div>
-                    <div className="w-3 h-full bg-sky-500"></div>
+                    <div className="w-3 h-full bg-sky-700 outline outline-1"></div>
+                    <div className="w-3 h-full bg-sky-600 outline outline-1"></div>
+                    <div className="w-3 h-full bg-sky-500 outline outline-1"></div>
                 </div>
             </div>
             <TodaysWears handleInventoryUpdate={handleInventoryUpdate} wearsUpdated={wearsUpdated}/>
